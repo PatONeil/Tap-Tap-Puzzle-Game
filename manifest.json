@@ -1,0 +1,35 @@
+{
+  "name": "TapTap",
+  "short_name": "TapTap",
+  "description": "A free Tap Tap game with many options",
+	"icons": [
+    {
+      "src": "images/T512x512.png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "images/T256x256.png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "images/T192x192.png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "images/T180x180.png",
+      "sizes": "180x180"
+    },
+    {
+      "src": "images/T64x64.png",
+      "sizes": "64x64"
+    },
+    {
+      "src": "images/T24x24.png",
+      "sizes": "24x24"
+    }
+  ],
+  "start_url": "/TapTap/index.html",
+  "theme_color": "#eeffee",
+  "background_color": "#eeffee",
+  "display": "standalone"
+}

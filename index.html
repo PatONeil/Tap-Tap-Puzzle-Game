@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Tap Tap</title> 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+ 	<link rel="manifest" href="manifest.json" /> 
+	<link rel="icon" href="images/T64x64.png" />
+   <style> <!-- styles -->
+
+			#body1 {
+			}
+			body {
+				background: #225;
+				color: #000000;
+				margin:	0px;
+				padding: 0px;
+			}
+			a {
+				color: #f00;
+			}
+			h1 {
+			  color: white;
+			  margin:0rem;
+			  text-align: center;
+			}
+			h2 {
+				font-size: 1rem;
+			}
+			#page1 {
+				margin: 1rem;
+			}
+			section {
+			  margin-left:  1rem;
+			  margin-right: 1rem;
+			  margin-bottom: 2rem;
+			  display: flex;
+			  flex-flow: row wrap;
+			}
+			section > div {
+				flex: 1;
+				background:white;
+				padding: 1px;
+				border-radius: 20px;
+				border: 3px outset;
+				margin-bottom: 2px;
+				text-align: center;
+			}
+			.qSelect {
+				color: white;
+				border-style:inset;
+				background: #225
+				;
+			}
+			input[type="radio"] {
+			  display: none;
+			  &:not(:disabled) ~ label {
+				cursor: pointer;
+			  }
+			  &:disabled ~ label {
+			  }
+			}
+			.buttonDiv,.donate {
+				text-align:center;
+				margin-left:1rem;
+				margin-right:1rem;
+			}
+			.buttonDiv > button, .donate a button{
+			  background: white;
+			  border: 2px solid hsla(150, 75%, 50%, 1);
+			  border-radius: 20px;
+			  padding-left:  0.2rem;
+			  padding-right: 0.2rem;
+			  text-align: center;
+			  box-shadow: 0px 3px 10px -2px hsla(150, 5%, 65%, 0.5);
+			  width: 100%;
+			}
+			.buttonDiv > button:hover {
+			  background: hsla(150, 75%, 50%, 1);
+			  color: hsla(215, 0%, 100%, 1);
+			  box-shadow: 0px 0px 20px hsla(150, 100%, 50%, 0.75);
+			}
+			label {
+			}
+			label > h2 {
+				margin:0.1rem;
+				margin-bottom:0px;
+			}
+			label > p {
+				margin:0;
+				font-size:0.7rem;
+			}
+			.question {
+				color:white;
+			}
+			#congrat {
+				text-align: center;
+				width: 100%;
+				font-size: 40px;
+				position: absolute;
+				top: 10rem;
+				left: 0;
+				right: 0;
+				color: white;
+				font-weight: 900;
+				font-family: sans-serif;
+				color:white;
+				text-shadow: 4px 4px #000000;
+			}
+			#info {
+				color: white;
+			}
+			@media only screen and (max-width: 700px) {
+			  section {
+				flex-direction: column;
+			  }
+			}
+			.instructions {
+				color: white;
+				margin-top: 0.1rem;
+				margin-bottom: 0.6rem;
+			}
+	</style>
+    <style>  <!-- Modal help dialog -->
+		/* The Modal (background) */
+		body {}
+		.modal {
+		  display: none; /* Hidden by default */
+		  position: fixed; /* Stay in place */
+		  z-index: 1; /* Sit on top */
+		  left: 0;
+		  top: 0;
+		  width: 100%; /* Full width */
+		  height: 100%; /* Full height */
+		  overflow: auto; /* Enable scroll if needed */
+		  background-color: rgb(0,0,0); /* Fallback color */
+		  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+		}
+
+		/* Modal Content/Box */
+		.modal-content {
+		  border: 1px solid white;
+		  background-color: #fefefe;
+		  margin: 15% auto; /* 15% from the top and centered */
+		  padding: 20px;
+		  border: 1px solid #888;
+		  width: 80%; /* Could be more or less, depending on screen size */
+		}
+		.modal-header {
+		  padding: 2px 16px;
+		  background-color: #5cb85c;
+		  color: lightblue;
+		}
+		.modal-body {padding: 2px 16px;}
+
+		/* The Close Button */
+		.close {
+			background: antiquewhite;
+			right: 22px;
+			line-height: 25px;
+			position: absolute;
+			border: 1px solid white;
+			padding-left: 7px;
+			padding-bottom: 0px;
+			padding-right: 7px;
+			font-weight: bold;
+			color: #000;
+			float: right;
+			font-size: 28px;
+			font-weight: bold;
+		}
+
+		.close:hover,
+		.close:focus {
+		  color: black;
+		  text-decoration: none;
+		  cursor: pointer;
+		}
+		.dialog {
+		  background: white;
+		  width: 80%;
+		  position: absolute;
+		  left: 7%;
+		  top: 7%;
+		  padding: 10px;
+		  box-shadow: 0 10px 30px rgba(gray,0.4);
+		  border: 3px solid $text-color;
+		  display:none;
+		  }
+		  .dialog__close {
+			font-size: 2rem;
+			line-height: 2rem;
+			position: absolute;
+			right: 10px;
+			top: 0px;
+			cursor: pointer;
+			padding: 15px;
+		  }
+		  .dialog__title {
+			font-size: 2rem;
+			font-family: 'Arial 24px', serif;
+			font-weight: bold;
+			margin: 0;
+			padding: 0 0 3px 0;
+			border-bottom: 2px solid black;
+		  }
+		  .dialog__content {
+			color:black;
+		  }
+		  .dialog p {
+			color:black;
+			font-size:11pt;
+		  }
+		  .dialog h3 {
+			margin:0px;
+			color:black;
+			font-size:12pt;
+		  }
+  </style>
+</head>
+
+<body id="body1">
+<div id="page1" class="page">
+    <div style="display: flex; justify-content: flex-end;">
+        <div style="margin:auto;">
+            <h1>Tap Tap</h1>
+        </div>
+        <div id="help">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px" viewBox="0 0 30 30" version="1.1">
+                <g id="surface1">
+                    <path style=" stroke:none;fill-rule:nonzero;fill:rgb(100%,100%,100%);fill-opacity:1;" d="M 15 0 C 6.71875 0 0 6.71875 0 15 C 0 23.28125 6.71875 30 15 30 C 23.28125 30 30 23.28125 30 15 C 30 6.71875 23.28125 0 15 0 Z M 15 1.921875 C 22.21875 1.921875 28.078125 7.78125 28.078125 15 C 28.078125 22.21875 22.21875 28.078125 15 28.078125 C 7.78125 28.078125 1.921875 22.21875 1.921875 15 C 1.921875 7.78125 7.78125 1.921875 15 1.921875 Z M 15.21875 5.109375 C 14.402344 5.113281 13.621094 5.21875 12.929688 5.417969 C 12.222656 5.621094 11.558594 5.941406 10.996094 6.351562 C 10.511719 6.707031 10.046875 7.160156 9.695312 7.632812 C 9.070312 8.464844 8.726562 9.378906 8.632812 10.433594 C 8.628906 10.503906 8.625 10.5625 8.625 10.566406 C 8.628906 10.566406 11.878906 10.96875 11.898438 10.96875 C 11.90625 10.96875 11.914062 10.933594 11.9375 10.828125 C 12.230469 9.617188 12.761719 8.800781 13.585938 8.304688 C 14.230469 7.917969 15.054688 7.765625 15.953125 7.859375 C 16.363281 7.90625 16.734375 8.003906 17.058594 8.160156 C 17.464844 8.355469 17.835938 8.664062 18.097656 9.03125 C 18.328125 9.355469 18.46875 9.71875 18.511719 10.128906 C 18.523438 10.242188 18.519531 10.5 18.507812 10.613281 C 18.472656 10.886719 18.402344 11.121094 18.28125 11.359375 C 18.160156 11.597656 18.058594 11.734375 17.867188 11.929688 C 17.5625 12.242188 17.089844 12.652344 16.25 13.339844 C 15.710938 13.78125 15.347656 14.113281 15.03125 14.441406 C 14.292969 15.21875 13.953125 15.800781 13.75 16.648438 C 13.613281 17.207031 13.558594 17.78125 13.574219 18.628906 C 13.578125 18.839844 13.585938 19.039062 13.585938 19.074219 L 13.585938 19.140625 L 16.824219 19.140625 L 16.828125 18.777344 C 16.832031 18.289062 16.859375 17.972656 16.914062 17.667969 C 16.996094 17.175781 17.125 16.917969 17.503906 16.496094 C 17.746094 16.226562 18.058594 15.929688 18.542969 15.523438 C 19.257812 14.925781 19.761719 14.476562 20.230469 14.007812 C 20.96875 13.269531 21.351562 12.765625 21.625 12.179688 C 21.835938 11.714844 21.957031 11.253906 21.992188 10.75 C 22.003906 10.625 22.003906 10.292969 21.992188 10.152344 C 21.925781 9.097656 21.527344 8.164062 20.769531 7.296875 C 20.652344 7.164062 20.351562 6.867188 20.210938 6.742188 C 19.46875 6.082031 18.609375 5.636719 17.578125 5.375 C 16.949219 5.21875 16.34375 5.136719 15.578125 5.113281 C 15.457031 5.109375 15.335938 5.109375 15.21875 5.109375 Z M 13.585938 20.648438 L 13.585938 23.949219 L 16.882812 23.949219 L 16.882812 20.648438 Z M 13.585938 20.648438 "/>
+                </g>
+            </svg>
+        </div>
+    </div>
+    <h2 class="question">Select Puzzle Shape&hellip;</h2>
+    <section>
+        <div class="qSelect">
+            <input type="radio" id="control_01a" name="selectType" value=1 checked>
+            <label for="control_01a">
+                <h2>Cube</h2>
+                <p>Traditional tap puzzle</p>
+            </label>
+        </div>
+        <div>
+            <input type="radio" id="control_02a" name="selectType" value=2>
+            <label for="control_02a">
+                <h2>Cylinder</h2>
+                <p>A different set of challenges</p>
+            </label>
+        </div>
+        <div>
+            <input type="radio" id="control_03a" name="selectType" value=3>
+            <label for="control_03a">
+                <h2>Frame</h2>
+                <p>Another set of challenges</p>
+            </label>
+        </div>
+    </section>
+    <h2 class="question">Select difficulty&hellip;</h2>
+    <section>
+        <div class="qSelect">
+            <input type="radio" id="control_01" name="selectDifficulty" value=1 checked>
+            <label for="control_01">
+                <h2>Easy</h2>
+                <p>Good way to learn game</p>
+            </label>
+        </div>
+        <div>
+            <input type="radio" id="control_02" name="selectDifficulty" value=2>
+            <label for="control_02">
+                <h2>Intermediate</h2>
+                <p>Challenging but not too hard.</p>
+            </label>
+        </div>
+        <div>
+            <input type="radio" id="control_03" name="selectDifficulty" value=3>
+            <label for="control_03">
+                <h2>Hard</h2>
+                <p>This will challenge you</p>
+            </label>
+        </div>
+        <div>
+            <input type="radio" id="control_04" name="selectDifficulty" value=4>
+            <label for="control_04">
+                <h2>Expert</h2>
+                <p>Expect to spend some time completing this game</p>
+            </label>
+        </div>
+    </section>
+    <div class="buttonDiv">
+        <button id="startButton"><h2>Press To Start</h2></button>
+    </div>
+    <div class="donate">
+        <a href="https://www.paypal.com/donate/?hosted_button_id=ZBL6JNPTM3DXY">
+            <button style="margin-top:3rem;">
+                <h2 style="color:slateblue;font-size:0.7rem;">
+                    Click here to donate for this add free game
+                </h2>
+            </button>
+        </a>
+    </div>
+</div>
+<div id="canvasPage" class="page" style="display:none;">
+    <div id="info" style="position:absolute;width:100%;top:1rem;">
+        <div
+                id="infoData" style="float:right;margin-top:0.5rem;margin-right:2rem;">
+            <span id="count" style="padding-right:3rem;">888</span>
+            <span id="time">10:00:01</span>
+        </div>
+        <div id="congrat">
+            <div>Congratulations</div>
+            <div style="margin-top: 4rem;font-size: 30px;">
+                Tap to continue
+            </div>
+        </div>
+    </div>
+</div>
+<div id="page2" class="dialog">
+    <span id="close" class="dialog__close">&#x2715;</span>
+    <h2 class="dialog__title">Instructions</h2>
+    <h3 class="question" style="margin-top:1rem;">Objective of Game</h3>
+    <p class="instructions">
+        The objective of the game is to eliminate all
+        of the cubes. The cubes can only be move in the
+        direction of the arrows on the cube.
+    </p>
+    <p>
+        If a cube can be moved off the display area without being
+        blocked by another cube, tap it to remove it.
+    </p>
+    <h3 class="question">Pan, Zoom and Rotate Cube</h3>
+    <p class="instructions">
+        The cubes can be rotated by moving a single finger touch moving
+        around the display area
+    </p>
+    <p class="instructions">
+        The cubes can be moved around the display area with a
+        two finger touch.
+    </p>
+    <p class="instructions">
+        The cubes can be zoomed with a pinch move with two fingers
+        in the display area.
+    </p>
+</div>
+	<script  src="js/three.min.js"></script >
+	<script  src="js/tap.js"></script >
+</body>
+</html>
